@@ -1,5 +1,5 @@
 """
-File functions ini merupakan tempat untuk penyimpanan berbagai fungsi dan data yang dipergunakan dalam pembelajaran pemrograman python.
+File `functions.py` ini merupakan tempat untuk penyimpanan berbagai fungsi dan data yang dipergunakan dalam pembelajaran pemrograman python.
 Berbagai fungsi dan data yang telah dibuat pada file ini dapat dipergunakan dengan cara diimport seperti berikut di bawah:
    ```from functions import <nama_fungsi>```
 """
