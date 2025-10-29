@@ -4,6 +4,7 @@ Berbagai fungsi dan data yang telah dibuat pada file ini dapat dipergunakan deng
    ```from functions import <nama_fungsi>```
 """
 import pandas as pd, os,  matplotlib.pyplot as plt, ipywidgets as widgets
+from typing import List, Callable
 
 # DATA
 Part_3 = {
@@ -83,7 +84,7 @@ def parsing_file_data(nama_folder: str, nama_file: str) -> object | None:
 
 def print_satu_persatu(
     jdl : str,
-    deret : list, 
+    deret : List[int], 
     margin : int
 ) -> None:
     """
@@ -110,8 +111,8 @@ def print_satu_persatu(
         time.sleep(0.3)
 
 def quick_sort(
-    deret : list
-) -> list:
+    deret : List[int]
+) -> List[int]:
     """
     Fungsi untuk mengurutkan elemen pada suatu deret 
       yang dilakukan dengan algoritma 'quick sort`
@@ -138,10 +139,10 @@ def quick_sort(
     return quick_sort(kiri) + tengah + quick_sort(kanan)
 
 def quick_sort_show(
-    deret : list,
+    deret : List[int],
     N : int,
     recursive = 1
-) -> list:
+) -> List[int]:
     """
     Fungsi untuk memvisualisasikan proses pengurutan elemen suatu deret 
       yang dilakukan dengan algoritma `quick sort`
@@ -190,13 +191,7 @@ def quick_sort_show(
     for pesan, partisi in zip(pesans, partisis):
       print_satu_persatu(pesan, partisi, N)
       input()
-    # tengah = 
-    # print_satu_persatu(tengah, partisi_tengah, N)
-    # input()
-    # kanan = 
-    # print_satu_persatu(kanan, partisi_kanan, N)
-    # input()
-
+       
     # 12. Naikkan nomor proses untuk menandai progres recursive
     recursive +=1
 
@@ -204,8 +199,8 @@ def quick_sort_show(
     return quick_sort_show(partisi_kiri, N, recursive) + partisi_tengah + quick_sort_show(partisi_kanan, N, recursive)
 
 def bubble_sort(
-    deret : list
-) -> list:
+    deret : List[int]
+) -> List[int]:
     """
     Fungsi untuk melakukan pengurutan elemen pada suatu deret 
       dengan menggunakan algoritma 'bubble sort`
@@ -231,9 +226,9 @@ def bubble_sort(
     return deret_
 
 def bubble_sort_show(
-    deret : list,
+    deret : List[int],
     N : int
-) -> list:
+) -> List[int]:
     """
     Fungsi untuk melakukan visualisasi bagi proses pengurutan deret 
       yang dilakukan dengan menggunakan algoritma `bubble sort`
@@ -275,8 +270,8 @@ def bubble_sort_show(
     return deret_
 
 def elapsed_time(
-    fungsi : object,
-    deret : list
+    fungsi : Callable,
+    deret : List[int]
 ) -> object:
     """
     Fungsi untuk menghitung `elapsed time` pemrosesan 
@@ -299,7 +294,7 @@ def generate_deret(
     batas_bawah : int,
     batas_atas : int,
     seed : int = 10
-) -> list:
+) -> List[int]:
     """
     FUNGSI UNTUK MEN-GENERATE DERET ACAK
     PARAMETERS:
@@ -322,11 +317,11 @@ def generate_deret(
     return deret
 
 def generate_time_complexity(
-    fungsi1 : object,
-    fungsi2 : object,
-    ukuran_input : list,
+    fungsi1 : Callable,
+    fungsi2 : Callable,
+    ukuran_input : List[int],
     sims : int = 1
-) -> tuple:
+) -> pd.DataFrame:
     """
     Fungsi untuk mencatat data jumlah elemen yang harus diproses (N), dan
       elapsed time yang diperlukan untuk memproses sejumlah elemen tersebut
@@ -338,7 +333,7 @@ def generate_time_complexity(
         4. sims -> int, angka jumlah pengulangan simulasi yang dilakukan (secara default = 1 kali).
     """
     # 1. Mengimpor berbagai fungsi dan modul yang akan dipergunakan
-    import pandas as pd, numpy as np, time
+    import numpy as np, time
     
     # 2. List kosong untuk diisi dengan data hasil simulasi bernama `hasil`
     hasil = []
@@ -360,13 +355,10 @@ def generate_time_complexity(
       time.sleep(0.2)
         
     # 4. Buat dataframe dari data pada list `hasil`, lalu rata-ratakan berdasarkan N
-    df = pd.DataFrame(hasil)
-    df_complexity = (df
-                    .groupby("N")
-                    .agg({fungsi1.__name__:'mean', fungsi2.__name__:'mean'}))
+    df = pd.melt(pd.DataFrame(hasil), id_vars=['N', 'simulasi_ke']).rename(columns={'variable':'Algoritma', 'value':'Elapsed Time', 'N':'Jumlah Elemen'})
     
-    # 5. Jadikan df_complexity sebagai output proses
-    return df.set_index(['N', 'simulasi_ke']), df_complexity
+    # 5. Jadikan df sebagai output proses
+    return df
 
 def visual_sebaran(
     data: object, 
@@ -380,7 +372,7 @@ def visual_sebaran(
     2. output_path -> str, path menyimpan file.
     """
     # 1. Import modul yang diperlukan
-    import pandas as pd, matplotlib.pyplot as plt, seaborn as sns
+    import matplotlib.pyplot as plt, seaborn as sns
     
     # 2. Buat dataframe dari `data` dictionary
     df = pd.DataFrame(data)
@@ -411,47 +403,44 @@ def visual_sebaran(
     plt.savefig(f"{output_path}.png", dpi=300, bbox_inches='tight')
     plt.show()
 
-def buat_visualisasi(
-    data : object,
-    output_path : str
+def line_plot_complexity(
+    data : pd.DataFrame,
+    x: str = 'Jumlah Elemen',
+    y: str = 'Elapsed Time',
+    hue: str = 'Algoritma',
+    output_path : str = 'Complexity Simulation Results.png'
 ) -> None:
     """
-    Fungsi untuk membuat grafik dari sebuah dataframe 
+    Fungsi untuk membuat grafik garis dari sebuah dataframe 
       dan menyimpan hasilnya dalam format `png`
     PARAMETERS:
         1. data -> object, dataframe yang akan divisualisasikan;
-        2. output_path -> str, yang menunjukkan `path` dan nama_file dari output.
+        2. x -> string, nama kolom yang menjadi axis-x;
+        3. y -> string, nama kolom yang menjadi axis-y;
+        4. hue -> string, nama kolom yang menjadi pembeda pada garis;
+        5. output_path -> str, yang menunjukkan `path` dan nama_file dari output.
     """
     # 1. Mengimpor fungsi dan modul yang diperlukan
     import matplotlib.pyplot as plt, seaborn as sns
+
+    # 2. Validasi attribut kolom dari DataFrame input
+    for to_check in ['Jumlah Elemen', 'Elapsed Time', 'Algoritma']:
+        if to_check not in data.columns:
+            raise ValueError(f"{to_check} is not in the dataframe!!")
     
-    # 2. Set `theme` dari grafik
+    # 3. Set `theme` dari grafik
     sns.set_theme('paper')
     sns.set_palette('pastel')
     
-    # 3. Buat Layer Grafik
+    # 4. Buat Layer Grafik
     fig, ax = plt.subplots(figsize=(10, 5))
     
-    # 4. Isikan data dari dataframe ke layer grafik yang telah dibuat
-    sns.lineplot(data=data, ax=ax)
+    # 5. Isikan data dari dataframe ke layer grafik yang telah dibuat
+    sns.lineplot(data=data, x=x, y=y, hue=hue, ax=ax)
     
-    # 5. Beri label untuk axis Y
-    ax.set_ylabel("Average Elapsed Time (detik/proses)")
-    
-    # 6. Beri label untuk axis X
-    ax.set_xlabel("Jumlah Elemen (N)")
-    
-    # 7. Simpan grafik ke file dan tampilkan ke layar
+    # 6. Simpan grafik ke file dan tampilkan ke layar
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.show()
-
-def resize_picture():
-    from PIL import Image
-    file = input("Tuliskan Nama File:")
-    image = Image.open(file)
-    width = int(image.size[0]/2)
-    height = int(image.size[1]/2)
-    image.resize((width, height)).save(f"output/{file}")
 
 def concat_list(daftar: list, joint: str) -> str:
   """
