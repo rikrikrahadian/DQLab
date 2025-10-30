@@ -39,12 +39,13 @@ def check_answers(correct_answers, options, result_widget):
 
     result_widget.value = feedback
 
-def validasi_file_data(nama_file):
-  return nama_file.count('.')==1 and nama_file.split('.')[-1] in ['txt', 'csv', 'xls', 'xlsx', 'json']
+def validasi_file_data(nama_file: str) -> bool:
+   """Fungsi untuk melakukan validasi tipe file yang diinput user"""
+   return nama_file.count('.')==1 and nama_file.split('.')[-1] in ['txt', 'csv', 'xls', 'xlsx', 'json']
 
 def validasi_file_ada(file_path: str) -> bool:
-  import os
-  return os.path.exists(file_path)
+   """Fungsi untuk melakukan validasi keberadaan file path inputan user"""
+   return os.path.exists(file_path)
 
 def parsing_file_data(nama_folder: str, nama_file: str) -> object | None:
     """
