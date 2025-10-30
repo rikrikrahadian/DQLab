@@ -4,7 +4,7 @@ Berbagai fungsi dan data yang telah dibuat pada file ini dapat dipergunakan deng
    ```from functions import <nama_fungsi>```
 """
 import pandas as pd, os,  matplotlib.pyplot as plt, ipywidgets as widgets
-from typing import List, Callable
+from typing import List, Callable, Tuple
 
 # DATA
 Part_3 = {
@@ -27,7 +27,12 @@ layouts = widgets.Layout(width='auto')
 
 
 # FUNCTIONS
-def check_answers(correct_answers, options, result_widget):
+def check_answers(
+   correct_answers: Tuple[bool, ...], 
+   options: Tuple[bool, ...], 
+   result_widget: widget.Textarea
+) -> None:
+   """Fungsi untuk melakukan pengecekan jawaban Quiz yang disubmit user"""
     # Terima Jawaban User
     user_answers = tuple(option.value for option in options)
 
