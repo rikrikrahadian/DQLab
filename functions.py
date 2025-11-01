@@ -34,15 +34,15 @@ def check_answers(
 ) -> None:
    """Fungsi untuk melakukan pengecekan jawaban Quiz yang disubmit user"""
     # Terima Jawaban User
-    user_answers = tuple(option.value for option in options)
+   user_answers = tuple(option.value for option in options)
 
-    # Check apakah jawaban user sesuai kunci
-    if user_answers == correct_answers:
-        feedback = "Pilihan anda tepat!"
-    else:
-        feedback = "Pilihan anda kurang tepat, silahkan coba lagi!"
+   # Check apakah jawaban user sesuai kunci
+   if user_answers == correct_answers:
+       feedback = "Pilihan anda tepat!"
+   else:
+       feedback = "Pilihan anda kurang tepat, silahkan coba lagi!"
 
-    result_widget.value = feedback
+   result_widget.value = feedback
 
 def validasi_file_data(nama_file: str) -> bool:
    """Fungsi untuk melakukan validasi tipe file yang diinput user"""
