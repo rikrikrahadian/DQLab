@@ -30,7 +30,7 @@ layouts = widgets.Layout(width='auto')
 def check_answers(
    correct_answers: Tuple[bool, ...], 
    options: Tuple[bool, ...], 
-   result_widget: widget.Textarea
+   result_widget: widgets.Textarea
 ) -> None:
    """Fungsi untuk melakukan pengecekan jawaban Quiz yang disubmit user"""
    # Terima Jawaban User
