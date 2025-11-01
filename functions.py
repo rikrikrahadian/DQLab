@@ -509,7 +509,8 @@ def create_title_pattern(df: object, nama_kolom: str) -> str:
 
         # Tambahkan title_baru ke list_of_titles
         if pattern_baru not in list_of_patterns:
-          list_of_patterns.append(pattern_baru)
+          if patter_baru!="":
+              list_of_patterns.append(pattern_baru)
           pesan = f"Pattern '{pattern_baru}' sudah ditambahkan ke list!"
         else:
           pesan = f"Pattern '{pattern_baru}' sudah ada sebelumnya pada list!"
