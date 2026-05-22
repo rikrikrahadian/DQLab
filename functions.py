@@ -121,7 +121,7 @@ def parsing_file_data(nama_folder: str, nama_file: str) -> object | None:
 
 def print_satu_persatu(
     jdl : str,
-    deret : List[int], 
+    deret : List[int|str], 
     margin : int
 ) -> None:
     """
