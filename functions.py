@@ -11,7 +11,8 @@ from IPython.display import display, Markdown
 Part_0 = {
     'Q1' : (False, False, True, True, False),
     'Q2' : (False, True, False, False, True),
-    'Q3' : (False, False, False, False, False)
+    'Q3' : (False, False, False, False, False),
+    'Q4' : (False, True, True, True, False)
 }
 Part_3 = {
     'Q1' : (False, False, False, True, False),
