@@ -12,7 +12,8 @@ Part_0 = {
     'Q1' : (False, False, True, True, False),
     'Q2' : (False, True, False, False, True),
     'Q3' : (False, False, False, False, False),
-    'Q4' : (False, True, True, True, False)
+    'Q4' : (False, True, True, True, False),
+    'Q5' : (False, False, False, True, True)
 }
 Part_3 = {
     'Q1' : (False, False, False, True, False),
