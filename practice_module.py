@@ -1,5 +1,5 @@
 """
-File `functions.py` ini merupakan tempat untuk penyimpanan berbagai fungsi dan data yang dipergunakan dalam pembelajaran pemrograman python.
+File `practice_module.py` ini merupakan tempat untuk penyimpanan berbagai fungsi dan data yang dipergunakan dalam pembelajaran pemrograman python.
 Berbagai fungsi dan data yang telah dibuat pada file ini dapat dipergunakan dengan cara diimport seperti berikut di bawah:
    ```from functions import <nama_fungsi>```
 """
@@ -153,7 +153,7 @@ def print_satu_persatu(
 
 def quick_sort(
     deret : List[int],
-    opt : Literal['asc', 'desc'] = 'asc
+    opt : Literal['asc', 'desc'] = 'asc'
 ) -> List[int]:
     """
     Fungsi untuk mengurutkan elemen pada suatu deret 
