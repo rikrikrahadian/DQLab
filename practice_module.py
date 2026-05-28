@@ -18,6 +18,13 @@ Part_0 = {
     'Q7' : (True, False, True, True, True),
     'Q8' : (True, True, True, False, True)
 }
+Part_1 = {
+    'Q1' : (False, True, False, False, False),
+    'Q2' : (False, False, True, False, False),
+    'Q3' : (False, True, False, False, False),
+    'Q4' : (False, False, True, False, False),
+    'Q5' : (False, False, True, False, False)
+}
 Part_3 = {
     'Q1' : (False, False, False, True, False),
     'Q2' : (False, True, False, True, False),
