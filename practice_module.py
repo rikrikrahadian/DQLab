@@ -4,7 +4,7 @@ Berbagai fungsi dan data yang telah dibuat pada file ini dapat dipergunakan deng
    ```from functions import <nama_fungsi>```
 """
 import pandas as pd, os,  matplotlib.pyplot as plt, ipywidgets as widgets
-from typing import List, Callable, Tuple
+from typing import List, Callable, Tuple, Literal
 from IPython.display import display, Markdown
 
 # DATA
@@ -152,14 +152,21 @@ def print_satu_persatu(
         time.sleep(0.3)
 
 def quick_sort(
-    deret : List[int]
+    deret : List[int],
+    opt : Literal['asc', 'desc'] = 'asc
 ) -> List[int]:
     """
     Fungsi untuk mengurutkan elemen pada suatu deret 
       yang dilakukan dengan algoritma 'quick sort`
     PARAMETERS:
         1. deret -> list yang belum disortir.
+        2. opt -> opsi pilihan cara sortir, 'asc' atau 'desc'
     """
+    # Validasi
+    # Pilihan opsi sortir:
+    if opt not in ['asc', 'desc']:
+        raise ValueError("Pilihan sortir hanya bisa 'asc' atau 'desc'")
+       
     # 1. Cek jumlah elemen pada deret > 1
     if len(deret) <= 1:
         # Jika <= 1
@@ -170,14 +177,14 @@ def quick_sort(
     
     # 3. Gunakan `pivot`, partisi elemen pada deret menjadi 3 deret:
     # elemen-elemen < `pivot`
-    kiri = [x for x in deret if x < pivot]
+    kiri = [x for x in deret if x < pivot] if opt == 'asc' else [x for x in deret if x > pivot]
     # elemen-elemen == `pivot`
     tengah = [x for x in deret if x == pivot]
     # elemen-elemen > `pivot`
-    kanan = [x for x in deret if x > pivot]
+    kanan = [x for x in deret if x > pivot] if opt == 'asc' else [x for x in deret if x < pivot]
     
     # 4. Susun output akhir
-    return quick_sort(kiri) + tengah + quick_sort(kanan)
+    return quick_sort(kiri, opt) + tengah + quick_sort(kanan, opt)
 
 def quick_sort_show(
     deret : List[int],
@@ -240,7 +247,8 @@ def quick_sort_show(
     return quick_sort_show(partisi_kiri, N, recursive) + partisi_tengah + quick_sort_show(partisi_kanan, N, recursive)
 
 def bubble_sort(
-    deret : List[int]
+    deret : List[int],
+    opt : Literal['asc', 'desc'] = 'asc'
 ) -> List[int]:
     """
     Fungsi untuk melakukan pengurutan elemen pada suatu deret 
@@ -248,6 +256,14 @@ def bubble_sort(
     PARAMETERS:
         1. deret -> list yang belum disortir.
     """
+    # VALIDASI
+    # 1. Jumlah elemen
+    if len(deret) == 0:
+        raise ValueError("deret tidak boleh kosong!")
+    # 2. Pilihan opsi cara sortir
+    if opt not in ['asc', 'desc']:
+        raise ValueError("Pilihan cara sortir hanya 'asc' dan 'desc'")
+       
     # 1. Buat copy dari `deret` yang diinput
     deret_ = deret.copy()
     
@@ -258,8 +274,9 @@ def bubble_sort(
     for i in range(jumlah_elemen):
         # Lakukan iterasi untuk proses perbandingan elemen dari kiri ke kanan
         for j in range(0, jumlah_elemen-i-1):
-            # Jika elemen di kiri > elemen di kanan
-            if deret_[j] > deret_[j+1]:
+            operator = (deret_[j] > deret_[j+1]) if opt == 'asc' else (deret_[j] < deret_[j+1])
+            # Jika operator terpenuhi
+            if operator:
                 # Tukar posisi elemen kiri ke sebelah kanan
                 deret_[j], deret_[j+1] = deret_[j+1], deret_[j]
 
